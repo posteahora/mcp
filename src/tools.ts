@@ -67,7 +67,7 @@ export function registerTools(server: McpServer, client: PosteAhoraClient): void
       outputSchema: { accounts: z.array(accountShape) },
       annotations: { readOnlyHint: true, openWorldHint: true },
       description:
-        "List the user's connected social accounts. ALWAYS call this first before create_post or schedule_post: you need each account's `id` to target the right channel (the API refuses to publish without an explicit accountId).",
+        "List the connected social accounts in this key/connector's workspace (a key or connector is bound to one workspace, so this returns that workspace's accounts, not every account you own). ALWAYS call this first before create_post or schedule_post: you need each account's `id` to target the right channel (the API refuses to publish without an explicit accountId).",
       inputSchema: {},
     },
     async () => {
@@ -86,7 +86,7 @@ export function registerTools(server: McpServer, client: PosteAhoraClient): void
       title: "List post ideas",
       outputSchema: { ideas: z.array(ideaShape) },
       annotations: { readOnlyHint: true },
-      description: "List the user's post ideas (the kanban backlog of drafts to iterate on).",
+      description: "List your workspace's post ideas (the kanban backlog of drafts to iterate on).",
       inputSchema: {},
     },
     async () => {
@@ -314,7 +314,7 @@ export function registerTools(server: McpServer, client: PosteAhoraClient): void
       title: "List posts",
       outputSchema: { posts: z.array(postShape) },
       annotations: { readOnlyHint: true },
-      description: "List the user's posts, newest first. Optionally filter by status.",
+      description: "List your workspace's posts, newest first. Optionally filter by status.",
       inputSchema: {
         status: z.enum(["draft", "scheduled", "queued", "published", "partial_published", "failed"]).optional(),
         limit: z.number().int().min(1).max(200).optional().describe("Max rows (default 50)"),
