@@ -13,6 +13,15 @@ publishing pipeline as the web app.
 1. Open PosteAhora → **Settings → API & integrations**.
 2. Create a key and copy it (it's shown once). It looks like `pah_live_…`.
 
+## Workspaces
+
+A key (and a hosted connector) is **bound to one workspace** — the one that was
+active when you created it. So `list_accounts`, `list_posts`, `list_ideas` and
+`get_analytics` return **that workspace's** data, not everything you own. To work
+in another workspace, create a separate key/connector there. Writes are
+**role-gated**: a **viewer** key can read but not `create_post`, `schedule_post`,
+`update_post`, `delete_post` or `publish_post_now` (those return `403`).
+
 ## Install (Claude Code / Cursor / Windsurf)
 
 Add to your MCP client config:
