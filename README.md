@@ -49,6 +49,7 @@ Add to your MCP client config:
 | Tool | What it does |
 |------|--------------|
 | `list_accounts` | List connected social accounts. **Call first** — you need each `accountId` to post. |
+| `list_boards` | List the boards of a connected Pinterest account. Every Pin needs a `boardId` from here. |
 | `list_ideas` / `create_idea` | Read / add backlog ideas (no publishing). |
 | `create_post` | Create a draft, or publish now (`status: "published"`). |
 | `schedule_post` | Publish at a future time (`scheduledAt`, ISO 8601). |
@@ -67,7 +68,9 @@ Add to your MCP client config:
      (e.g. `curl -T ./slide.jpg "<uploadUrl>" -H 'Content-Type: image/jpeg'`).
      This works for any size, including video, and is required for TikTok photos
      (they must be served from our verified `cdn.posteahora.com` domain).
-3. `create_post` with `accountMappings: [{ platform, accountId }]`, `mediaUrls`,
+3. Pinterest only: `list_boards` with the Pinterest `accountId` → pick a board
+   and pass its `id` as `platformOptions: { pinterest: { boardId } }`.
+4. `create_post` with `accountMappings: [{ platform, accountId }]`, `mediaUrls`,
    and `status: "published"` (or `schedule_post` with `scheduledAt`).
 
 ## Remote / hosted mode (experimental)

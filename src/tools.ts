@@ -31,7 +31,7 @@ const CONTENT_TYPES: Record<string, string> = {
 };
 
 const accountMappingSchema = z.object({
-  platform: z.string().describe("Platform id, e.g. instagram, twitter, linkedin, threads, facebook, tiktok, youtube"),
+  platform: z.string().describe("Platform id, e.g. instagram, twitter, linkedin, threads, facebook, tiktok, youtube, pinterest"),
   accountId: z.string().describe("connected_accounts.id from list_accounts for this platform"),
 });
 
@@ -73,6 +73,34 @@ export function registerTools(server: McpServer, client: PosteAhoraClient): void
     async () => {
       try {
         return ok(await client.get("/accounts"));
+      } catch (e) {
+        return fail(e);
+      }
+    },
+  );
+
+  server.registerTool(
+    "list_boards",
+    {
+      title: "List Pinterest boards of a connected account",
+      outputSchema: {
+        boards: z.array(z.object({
+          id: z.string(),
+          name: z.string(),
+          privacy: z.string(),
+          pinCount: z.number().nullable(),
+        }).passthrough()),
+      },
+      annotations: { readOnlyHint: true, openWorldHint: true },
+      description:
+        "List the boards of one connected Pinterest account. A Pin is always created on a board, so call this before create_post / schedule_post to Pinterest and pass the chosen board's `id` as platformOptions.pinterest.boardId.",
+      inputSchema: {
+        accountId: z.string().describe("connected_accounts.id of a Pinterest account (from list_accounts)"),
+      },
+    },
+    async ({ accountId }) => {
+      try {
+        return ok(await client.get(`/accounts/${encodeURIComponent(accountId)}/boards`));
       } catch (e) {
         return fail(e);
       }
@@ -187,7 +215,7 @@ export function registerTools(server: McpServer, client: PosteAhoraClient): void
     platformCaptions: z.record(z.string(), z.string()).optional()
       .describe("Per-platform caption overrides, keyed by platform id"),
     platformOptions: z.record(z.string(), z.unknown()).optional()
-      .describe("Per-platform options, keyed by platform id (e.g. { tiktok: {...}, instagram: {...} })"),
+      .describe("Per-platform options, keyed by platform id (e.g. { tiktok: {...}, instagram: {...} }). Pinterest REQUIRES a board: set pinterest.boardId to a board id from list_boards (optional pinterest.title up to 100 chars, pinterest.link, pinterest.altText). A Pin needs media: 1 image, 2-5 images (carousel) or 1 video."),
   };
 
   server.registerTool(
@@ -253,7 +281,7 @@ export function registerTools(server: McpServer, client: PosteAhoraClient): void
         platforms: z.array(z.string()).optional().describe("Platform ids this post targets"),
         connectedAccountId: z.string().optional().describe("connected_accounts.id to target (from list_accounts)"),
         platformOptions: z.record(z.string(), z.unknown()).optional()
-          .describe("Per-platform options, keyed by platform id"),
+          .describe("Per-platform options, keyed by platform id. Pinterest REQUIRES a board: set pinterest.boardId to a board id from list_boards (optional pinterest.title up to 100 chars, pinterest.link, pinterest.altText). A Pin needs media: 1 image, 2-5 images (carousel) or 1 video."),
         status: z.enum(["draft", "scheduled"]).optional(),
         scheduledAt: z.string().optional().describe("When to publish, ISO 8601. Required-in-future when status is 'scheduled'."),
       },
