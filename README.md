@@ -2,7 +2,7 @@
 
 MCP server for [PosteAhora](https://posteahora.com) — let AI agents add ideas,
 create, schedule, and publish social posts across Instagram, X/Twitter,
-LinkedIn, Threads, Facebook (and more) straight from a chat.
+LinkedIn, Threads, Facebook, Google Business (and more) straight from a chat.
 
 It's a thin wrapper over the PosteAhora public REST API: every call is
 authenticated with your API key and goes through the same quota, ownership, and

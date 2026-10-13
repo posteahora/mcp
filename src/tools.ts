@@ -31,7 +31,7 @@ const CONTENT_TYPES: Record<string, string> = {
 };
 
 const accountMappingSchema = z.object({
-  platform: z.string().describe("Platform id, e.g. instagram, twitter, linkedin, threads, facebook, tiktok, youtube, pinterest"),
+  platform: z.string().describe("Platform id, e.g. instagram, twitter, linkedin, threads, facebook, tiktok, youtube, pinterest, google_business"),
   accountId: z.string().describe("connected_accounts.id from list_accounts for this platform"),
 });
 
