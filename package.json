@@ -1,6 +1,6 @@
 {
   "name": "@posteahora/mcp",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "MCP server for PosteAhora — let AI agents add ideas, create, schedule and publish social posts across Instagram, X, LinkedIn, Threads, Facebook and more.",
   "type": "module",
   "bin": {
