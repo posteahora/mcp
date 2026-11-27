@@ -1,0 +1,36 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.posteahora/mcp",
+  "title": "PosteAhora",
+  "description": "Schedule and publish posts to 16 social networks from your AI assistant.",
+  "version": "0.2.2",
+  "repository": {
+    "url": "https://github.com/posteahora/mcp",
+    "source": "github"
+  },
+  "websiteUrl": "https://posteahora.com/mcp",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@posteahora/mcp",
+      "version": "0.2.2",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "POSTEAHORA_API_KEY",
+          "description": "PosteAhora API key (pah_live_...)",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.posteahora.com/mcp"
+    }
+  ]
+}
