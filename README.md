@@ -8,6 +8,22 @@ It's a thin wrapper over the PosteAhora public REST API: every call is
 authenticated with your API key and goes through the same quota, ownership, and
 publishing pipeline as the web app.
 
+## Hosted server (no install, no API key)
+
+Any MCP client that supports OAuth can connect straight to:
+
+```
+https://mcp.posteahora.com/mcp
+```
+
+Claude (web and desktop), ChatGPT, Cursor and Codex sign you in with your
+PosteAhora account and let you pick a workspace; no key to copy. Setup guides:
+[posteahora.com/docs/mcp/claude](https://posteahora.com/docs/mcp/claude).
+The rest of this README covers the npm package, for clients that need a local
+stdio server.
+
+[![PosteAhora MCP server](https://glama.ai/mcp/servers/posteahora/mcp/badge)](https://glama.ai/mcp/servers/posteahora/mcp)
+
 ## Get an API key
 
 1. Open PosteAhora → **Settings → API & integrations**.
